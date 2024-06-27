@@ -17,10 +17,7 @@ class BarChart<T: Number>(data: Array<T>): EChart() {
     ): EChart.Builder() {
         override fun build(): BarChart<T> {
             val chart = BarChart(data = data)
-            chart.xAxis = xAxis
-            chart.yAxis = yAxis
-            chart.title = title
-            chart.tooltip = tooltip
+            apply(chart)
             return chart;
         }
     }

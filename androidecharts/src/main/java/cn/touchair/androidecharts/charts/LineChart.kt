@@ -15,10 +15,7 @@ open class LineChart<T: Number> internal constructor(data: Array<T>): EChart() {
     ): EChart.Builder() {
         override fun build(): LineChart<T> {
             val chart = LineChart(data)
-            chart.xAxis = xAxis
-            chart.yAxis = yAxis
-            chart.title = title
-            chart.tooltip = tooltip
+            apply(chart)
             return chart
         }
     }

@@ -47,6 +47,14 @@ abstract class EChart(
             return this
         }
 
+        internal fun apply(chart: EChart) {
+            chart.xAxis = xAxis
+            chart.yAxis = yAxis
+            chart.tooltip = tooltip
+            chart.title = title
+            chart.grid = grid
+        }
+
         abstract fun build(): EChart
     }
 }

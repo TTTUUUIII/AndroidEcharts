@@ -9,7 +9,6 @@ class AreaChart<T: Number>(data: Array<T>): LineChart<T>(data) {
         override fun build(): LineChart<T> {
             val chart = super.build()
             chart.xAxis?.boundaryGap = false
-            chart.tooltip = tooltip
             chart.series.areaStyle = AreaStyle()
             return chart
         }
