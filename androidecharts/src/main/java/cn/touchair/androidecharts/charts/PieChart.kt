@@ -7,7 +7,8 @@ import cn.touchair.androidecharts.widget.Series
 class PieChart(data: Array<Map<String, Any>>): EChart() {
     val series: Series<Array<Map<String, Any>>> = Series(
         data =  data,
-        type = SeriesType.PIE
+        type = SeriesType.PIE,
+        radius = "50%"
     )
 
     class Builder(
@@ -18,6 +19,5 @@ class PieChart(data: Array<Map<String, Any>>): EChart() {
             apply(chart)
             return chart
         }
-
     }
 }

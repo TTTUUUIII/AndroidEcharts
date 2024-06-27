@@ -10,6 +10,7 @@ import cn.touchair.androidecharts.charts.AreaChart
 import cn.touchair.androidecharts.charts.BarChart
 import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
+import cn.touchair.androidecharts.charts.PieChart
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        drawLineChart()
         bindEvent()
     }
 
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonArea.setOnClickListener(this::onAction)
         binding.buttonLine.setOnClickListener(this::onAction)
         binding.buttonBar.setOnClickListener(this::onAction)
+        binding.buttonPie.setOnClickListener(this::onAction)
     }
 
     private fun onAction(view: View) {
@@ -48,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             R.id.button_area -> drawAreaChart()
             R.id.button_line -> drawLineChart()
             R.id.button_bar -> drawBarChart()
+            R.id.button_pie ->drawPieChart()
             else -> {}
         }
     }
@@ -83,6 +87,46 @@ class MainActivity : AppCompatActivity() {
             )
             .build()
         binding.chartView.draw(area, true)
+    }
+
+    private fun drawPieChart() {
+        val data = arrayOf<Map<String, Any>>(
+            mapOf(
+                "value" to 1048,
+                "name" to "Search Engine"
+            ),
+            mapOf(
+                "value" to 735,
+                "name" to "Direct"
+            ),
+            mapOf(
+                "value" to 580,
+                "name" to "Email"
+            ),
+            mapOf(
+                "value" to 484,
+                "name" to "Union Ads"
+            ),
+            mapOf(
+                "value" to 300,
+                "name" to "Video Ads"
+            )
+        )
+
+        val pie = PieChart.Builder(data = data)
+            .tooltip(
+                ToolTip(
+                    trigger = ToolTip.TRIGGER_ITEM
+                )
+            )
+            .title(
+                Title(
+                    "Referer of a Website",
+                    left = "center"
+                )
+            )
+            .build()
+        binding.chartView.draw(pie, true)
     }
 
     private fun drawBarChart() {

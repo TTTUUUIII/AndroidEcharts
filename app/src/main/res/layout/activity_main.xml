@@ -66,6 +66,13 @@
                 android:layout_width="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_small"
                 android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/button_pie"
+                app:cornerRadius="0dp"
+                android:text="@string/pie"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_small"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

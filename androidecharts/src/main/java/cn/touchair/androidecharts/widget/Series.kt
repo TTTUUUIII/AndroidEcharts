@@ -10,5 +10,6 @@ class Series<T>(
     val progressive: Int? = null,
     val animation: Boolean = false,
     val name: String = "",
-    var areaStyle: AreaStyle? = null
+    var areaStyle: AreaStyle? = null,
+    var radius: String? = null
 )

@@ -4,4 +4,5 @@
     <string name="area">Area</string>
     <string name="line">Line</string>
     <string name="bar">Bar</string>
+    <string name="pie">Pie</string>
 </resources>

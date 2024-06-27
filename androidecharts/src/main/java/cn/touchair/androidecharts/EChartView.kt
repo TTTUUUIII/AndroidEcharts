@@ -3,38 +3,48 @@ package cn.touchair.androidecharts
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import cn.touchair.androidecharts.charts.base.EChart
 
 @SuppressLint("SetJavaScriptEnabled")
-class EChartView(context: Context, attrs: AttributeSet? = null) : WebView(context, attrs) {
+class EChartView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
+    private val engine: WebView = WebView(context)
+    private val inProgressView: View = LayoutInflater.from(context).inflate(R.layout.layout_loading, this, false)
     private var delayedDrawable: EChart? = null
-    private var loaded = false
 
     init {
-        webViewClient = object: WebViewClient() {
+        engine.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val webViewClient = object: WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                loaded = true
+                inProgressView.visibility = GONE
                 delayedDrawable?.let {
                     draw(it, true)
                 }
             }
         }
-        settings.javaScriptEnabled = true
-        settings.allowFileAccess = true
+        engine.webViewClient = webViewClient
+        engine.settings.javaScriptEnabled = true
+        engine.settings.allowFileAccess = true
+        addView(engine)
+        addView(inProgressView)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        loadUrl("file:///android_asset/h5/index.html")
+        engine.loadUrl("file:///android_asset/h5/index.html")
     }
 
     fun draw(drawable: EChart, notMerge: Boolean = false, delayed: Boolean = false) {
-        if (loaded) {
-            evaluateJavascript("draw(${drawable.toJson()}, $notMerge)", null)
+        if (isLoaded()) {
+            engine.evaluateJavascript("draw(${drawable.toJson()}, $notMerge)", null)
             if (delayed) {
                 delayedDrawable = null
             }
@@ -42,4 +52,6 @@ class EChartView(context: Context, attrs: AttributeSet? = null) : WebView(contex
             delayedDrawable = drawable
         }
     }
+
+    private fun isLoaded(): Boolean = !inProgressView.isVisible
 }
