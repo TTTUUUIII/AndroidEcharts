@@ -1,4 +1,16 @@
-#container {
-    width: 100%;
-    height: calc(100vh - 18px);
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row > div {
+    height: auto;
+    margin: 3px;
+    flex-grow: 1;
+}
+
+@media (max-width: 800px) {
+    .row {
+        flex-direction: column;
+    }
 }

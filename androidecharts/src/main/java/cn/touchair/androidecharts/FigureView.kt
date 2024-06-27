@@ -11,13 +11,15 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import cn.touchair.androidecharts.charts.base.EChart
-
 @SuppressLint("SetJavaScriptEnabled")
-class EChartView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
+class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
+    private var notGrid = true
     private val engine: WebView = WebView(context)
     private val inProgressView: View = LayoutInflater.from(context).inflate(R.layout.layout_loading, this, false)
-    private var delayedDrawable: EChart? = null
+    private var delayedChart: EChart? = null
+    private var grid: Grid = Grid(1, 1)
+    private var cursor: Cursor = Cursor(0, 0)
 
     init {
         engine.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -25,8 +27,8 @@ class EChartView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 inProgressView.visibility = GONE
-                delayedDrawable?.let {
-                    draw(it, true)
+                delayedChart?.let {
+                    draw(it)
                 }
             }
         }
@@ -42,16 +44,37 @@ class EChartView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         engine.loadUrl("file:///android_asset/h5/index.html")
     }
 
-    fun draw(drawable: EChart, notMerge: Boolean = false, delayed: Boolean = false) {
+    fun draw(chart: EChart, cursor: Cursor = this.cursor, merge: Boolean = true) {
         if (isLoaded()) {
-            engine.evaluateJavascript("draw(${drawable.toJson()}, $notMerge)", null)
-            if (delayed) {
-                delayedDrawable = null
+            if (notGrid) {
+                grid()
             }
+            engine.evaluateJavascript("draw(${cursor.x}, ${cursor.y}, ${chart.toJson()}, $merge)", null)
+            delayedChart = null
         } else {
-            delayedDrawable = drawable
+            delayedChart = chart
         }
+        this.cursor = cursor
+    }
+
+    fun grid(grid: Grid = this.grid){
+        engine.evaluateJavascript("grid(${grid.row}, ${grid.col})", null)
+        if (this.grid != grid) {
+            this.grid = grid
+        }
+        notGrid = false
     }
 
     private fun isLoaded(): Boolean = !inProgressView.isVisible
+
+    data class Grid(
+        val row: Int,
+        val col: Int
+    )
+
+    data class Cursor(
+        val x: Int,
+        val y: Int
+    )
 }
+

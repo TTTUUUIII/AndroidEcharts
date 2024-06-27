@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                 Axis<Any>(type = "value")
             )
             .build()
-        binding.chartView.draw(area, true)
+        binding.chartView.draw(area, merge = false)
     }
 
     private fun drawAreaChart() {
@@ -83,10 +83,10 @@ class MainActivity : AppCompatActivity() {
                 Axis<Any>(type = "value")
             )
             .title(
-                Title("Area", left = "center")
+                Title("Area", left = "center", top = "10")
             )
             .build()
-        binding.chartView.draw(area, true)
+        binding.chartView.draw(area, merge = false)
     }
 
     private fun drawPieChart() {
@@ -122,11 +122,12 @@ class MainActivity : AppCompatActivity() {
             .title(
                 Title(
                     "Referer of a Website",
-                    left = "center"
+                    left = "center",
+                    top = "10"
                 )
             )
             .build()
-        binding.chartView.draw(pie, true)
+        binding.chartView.draw(pie, merge = false)
     }
 
     private fun drawBarChart() {
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                 ToolTip(trigger = ToolTip.TRIGGER_ITEM)
             )
             .build()
-        binding.chartView.draw(bar, true)
+        binding.chartView.draw(bar, merge = false)
     }
 
     private fun drawHeatmapChart() {
@@ -161,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                         Grid(bottom = "70", show = true)
                     )
                     .build()
-                binding.chartView.draw(heatmap, true)
+                binding.chartView.draw(heatmap, merge = false)
             }
     }
 }
