@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidEcharts</string>
+    <string name="heatmap">Heatmap</string>
+    <string name="area">Area</string>
+    <string name="line">Line</string>
+    <string name="bar">Bar</string>
 </resources>

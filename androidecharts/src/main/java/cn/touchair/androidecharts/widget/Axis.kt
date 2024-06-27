@@ -1,6 +1,7 @@
 package cn.touchair.androidecharts.widget
 
 class Axis<T>(
-    val data: Array<T>,
-    val type: String = "category"
+    var data: Array<T>? = null,
+    var type: String = "category",
+    var boundaryGap: Boolean = true
 )

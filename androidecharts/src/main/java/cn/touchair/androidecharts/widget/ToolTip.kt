@@ -1,0 +1,12 @@
+package cn.touchair.androidecharts.widget
+
+data class ToolTip(
+    val show: Boolean = true,
+    val trigger: String = "none"
+) {
+    companion object {
+        const val TRIGGER_ITEM = "item"
+        const val TRIGGER_AXIS = "axis"
+        const val TRIGGER_NONE = "none"
+    }
+}

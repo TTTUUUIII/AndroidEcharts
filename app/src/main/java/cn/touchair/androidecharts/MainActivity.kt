@@ -1,23 +1,27 @@
 package cn.touchair.androidecharts
 
 import android.os.Bundle
-import android.os.SystemClock
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import cn.touchair.androidecharts.charts.HeatMap
-import cn.touchair.androidecharts.common.Shape
+import cn.touchair.androidecharts.charts.AreaChart
+import cn.touchair.androidecharts.charts.BarChart
+import cn.touchair.androidecharts.charts.LineChart
+import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
+import cn.touchair.androidecharts.widget.Axis
+import cn.touchair.androidecharts.widget.Grid
+import cn.touchair.androidecharts.widget.Title
+import cn.touchair.androidecharts.widget.ToolTip
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.File
-import java.util.Arrays
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val gson: Gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,27 +32,92 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val text = File("$externalCacheDir/data_heatmap.json")
-            .readText()
-        val data: List<List<Float>> = Gson().fromJson(text, object: TypeToken<List<List<Float>>>(){}.type)
-        val remap = remap(data)
-        println(remap)
-        val heatMapChart = HeatMap<Float>(
-            0.3f,
-            1.4f,
-            remap,
-            Shape(data.size, data[0].size)
-        )
-        binding.chartView.draw(heatMapChart)
+        bindEvent()
     }
 
-    private fun remap(data: List<List<Float>>): List<List<Float>> {
-        val newData = mutableListOf<List<Float>>()
-        for (i in 0 until data.size) {
-            for (j in 0 until data[0].size) {
-                newData.add(listOf(i.toFloat(), j.toFloat(), data[i][j]))
-            }
+    private fun bindEvent() {
+        binding.buttonHeatmap.setOnClickListener(this::onAction)
+        binding.buttonArea.setOnClickListener(this::onAction)
+        binding.buttonLine.setOnClickListener(this::onAction)
+        binding.buttonBar.setOnClickListener(this::onAction)
+    }
+
+    private fun onAction(view: View) {
+        when (view.id) {
+            R.id.button_heatmap -> drawHeatmapChart()
+            R.id.button_area -> drawAreaChart()
+            R.id.button_line -> drawLineChart()
+            R.id.button_bar -> drawBarChart()
+            else -> {}
         }
-        return newData
+    }
+
+    private fun drawLineChart() {
+        val data = arrayOf(820, 932, 901, 934, 1290, 1330, 1320)
+        val area = LineChart.Builder(data = data)
+            .xAxis(
+                Axis(
+                    data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                )
+            )
+            .yAxis(
+                Axis<Any>(type = "value")
+            )
+            .build()
+        binding.chartView.draw(area, true)
+    }
+
+    private fun drawAreaChart() {
+        val data = arrayOf(820, 932, 901, 934, 1290, 1330, 1320)
+        val area = AreaChart.Builder(data = data)
+            .xAxis(
+                Axis(
+                    data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                )
+            )
+            .yAxis(
+                Axis<Any>(type = "value")
+            )
+            .title(
+                Title("Area", left = "center")
+            )
+            .build()
+        binding.chartView.draw(area, true)
+    }
+
+    private fun drawBarChart() {
+        val data = arrayOf(120, 200, 150, 80, 70, 110, 130)
+        val bar = BarChart.Builder(data = data)
+            .xAxis(
+                Axis(
+                    data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                )
+            )
+            .yAxis(
+                Axis<Any>(type = "value")
+            )
+            .tooltip(
+                ToolTip(trigger = ToolTip.TRIGGER_ITEM)
+            )
+            .build()
+        binding.chartView.draw(bar, true)
+    }
+
+    private fun drawHeatmapChart() {
+        assets.open("data/heatmap.json")
+            .use {
+                val text = it.readBytes().toString(Charsets.UTF_8)
+                val data: Array<Array<Float>> =
+                    gson.fromJson(text, object : TypeToken<Array<Array<Float>>>() {}.type)
+                val heatmap = HeatmapChart.Builder(data)
+                    .title(
+                        Title("Heatmap", left = "center", top = "10")
+                    )
+                    .grid(
+                        Grid(bottom = "70", show = true)
+                    )
+                    .build()
+                binding.chartView.draw(heatmap, true)
+            }
     }
 }

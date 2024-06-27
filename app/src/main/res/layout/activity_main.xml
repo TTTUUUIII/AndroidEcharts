@@ -10,10 +10,62 @@
     <cn.touchair.androidecharts.EChartView
         android:id="@+id/chart_view"
         android:layout_width="match_parent"
-        android:layout_height="340dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_small"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+            <Button
+                android:id="@+id/button_line"
+                app:cornerRadius="0dp"
+                android:text="@string/line"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_small"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/button_area"
+                app:cornerRadius="0dp"
+                android:text="@string/area"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_small"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/button_heatmap"
+                app:cornerRadius="0dp"
+                android:text="@string/heatmap"
+                android:layout_marginHorizontal="@dimen/padding_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_small"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+            <Button
+                android:id="@+id/button_bar"
+                app:cornerRadius="0dp"
+                android:text="@string/bar"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_small"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

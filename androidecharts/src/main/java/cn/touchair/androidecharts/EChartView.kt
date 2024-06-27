@@ -5,12 +5,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import cn.touchair.androidecharts.charts.Drawable
+import cn.touchair.androidecharts.charts.base.EChart
 
 @SuppressLint("SetJavaScriptEnabled")
 class EChartView(context: Context, attrs: AttributeSet? = null) : WebView(context, attrs) {
 
-    private var delayedDrawable: Drawable? = null
+    private var delayedDrawable: EChart? = null
     private var loaded = false
 
     init {
@@ -32,9 +32,9 @@ class EChartView(context: Context, attrs: AttributeSet? = null) : WebView(contex
         loadUrl("file:///android_asset/h5/index.html")
     }
 
-    fun draw(drawable: Drawable, delayed: Boolean = false) {
+    fun draw(drawable: EChart, notMerge: Boolean = false, delayed: Boolean = false) {
         if (loaded) {
-            evaluateJavascript("draw(${drawable.toJson()})", null)
+            evaluateJavascript("draw(${drawable.toJson()}, $notMerge)", null)
             if (delayed) {
                 delayedDrawable = null
             }
