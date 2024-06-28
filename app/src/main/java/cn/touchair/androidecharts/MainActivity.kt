@@ -11,7 +11,6 @@ import cn.touchair.androidecharts.charts.BarChart
 import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.charts.PieChart
-import cn.touchair.androidecharts.common.linspace
 import cn.touchair.androidecharts.common.range
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
 import cn.touchair.androidecharts.widget.Axis
@@ -19,10 +18,7 @@ import cn.touchair.androidecharts.widget.Grid
 import cn.touchair.androidecharts.widget.Title
 import cn.touchair.androidecharts.widget.ToolTip
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.util.stream.IntStream.range
 import kotlin.math.floor
-import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
 
