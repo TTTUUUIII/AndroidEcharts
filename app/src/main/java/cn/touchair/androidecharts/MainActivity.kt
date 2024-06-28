@@ -12,17 +12,16 @@ import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.charts.PieChart
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
+import cn.touchair.androidecharts.interfaces.AxisType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
 import cn.touchair.androidecharts.widget.Title
 import cn.touchair.androidecharts.widget.ToolTip
-import com.google.gson.Gson
 import kotlin.math.floor
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val gson: Gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +58,8 @@ class MainActivity : AppCompatActivity() {
     private fun drawLineChart() {
         val data = arrayOf(820, 932, 901, 934, 1290, 1330, 1320)
         val area = LineChart.Builder(data = data)
-            .xAxis(
+            .axis(
+                AxisType.X,
                 Axis(
                     data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
                 )
@@ -76,7 +76,8 @@ class MainActivity : AppCompatActivity() {
     private fun drawAreaChart() {
         val data = arrayOf(820, 932, 901, 934, 1290, 1330, 1320)
         val area = AreaChart.Builder(data = data)
-            .xAxis(
+            .axis(
+                AxisType.X,
                 Axis(
                     data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
                 )
@@ -137,7 +138,8 @@ class MainActivity : AppCompatActivity() {
     private fun drawBarChart() {
         val data = arrayOf(120, 200, 150, 80, 70, 110, 130)
         val bar = BarChart.Builder(data = data)
-            .xAxis(
+            .axis(
+                AxisType.X,
                 Axis(
                     data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
                 )

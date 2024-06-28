@@ -1,6 +1,7 @@
 .row {
     display: flex;
     flex-direction: row;
+    min-height: 200px;
 }
 
 .row > div {

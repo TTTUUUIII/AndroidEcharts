@@ -10,16 +10,18 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
-import cn.touchair.androidecharts.charts.base.EChart
+import cn.touchair.androidecharts.interfaces.EChart
+
 @SuppressLint("SetJavaScriptEnabled")
 class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     private var notGrid = true
     private val engine: WebView = WebView(context)
     private val inProgressView: View = LayoutInflater.from(context).inflate(R.layout.layout_loading, this, false)
-    private var delayedChart: EChart? = null
+    private val waitList: MutableList<DelayedChart> by lazy {
+        mutableListOf<DelayedChart>()
+    }
     private var grid: Grid = Grid(1, 1)
-    private var cursor: Cursor = Cursor(0, 0)
 
     init {
         engine.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -27,8 +29,11 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 inProgressView.visibility = GONE
-                delayedChart?.let {
-                    draw(it)
+                synchronized(this) {
+                    waitList.forEach {
+                        draw(it.chart,  it.gx, it.gy)
+                    }
+                    waitList.clear()
                 }
             }
         }
@@ -44,20 +49,27 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         engine.loadUrl("file:///android_asset/h5/index.html")
     }
 
-    fun draw(chart: EChart, cursor: Cursor = this.cursor, merge: Boolean = true) {
+    fun draw(chart: EChart, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
+    private fun draw(chart: EChart, gx: Int, gy: Int, merge: Boolean = true) {
         if (isLoaded()) {
             if (notGrid) {
                 grid()
             }
-            engine.evaluateJavascript("draw(${cursor.x}, ${cursor.y}, ${chart.toJson()}, $merge)", null)
-            delayedChart = null
+            engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.toJson()}, $merge)", null)
         } else {
-            delayedChart = chart
+            synchronized(this) {
+                waitList.add(
+                    DelayedChart(
+                        chart,
+                        gx,
+                        gy
+                    )
+                )
+            }
         }
-        this.cursor = cursor
     }
 
-    fun grid(grid: Grid = this.grid){
+    private fun grid(grid: Grid = this.grid){
         if (isLoaded()) {
             engine.evaluateJavascript("grid(${grid.row}, ${grid.col})", null)
             notGrid = false
@@ -74,9 +86,10 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         val col: Int
     )
 
-    data class Cursor(
-        val x: Int,
-        val y: Int
+    private inner class DelayedChart(
+        val chart: EChart,
+        val gx: Int,
+        val gy: Int
     )
 }
 

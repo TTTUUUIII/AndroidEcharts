@@ -1,11 +1,13 @@
 package cn.touchair.androidecharts.charts.base
+import cn.touchair.androidecharts.interfaces.AxisType
+import cn.touchair.androidecharts.interfaces.EChart
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
 import cn.touchair.androidecharts.widget.Title
 import cn.touchair.androidecharts.widget.ToolTip
 import com.google.gson.Gson
 
-abstract class EChart(
+abstract class BaseChart(
     internal var xAxis: Axis<*>? = null,
     internal var yAxis: Axis<*>? = null,
     internal var grid: Grid? = null,
@@ -13,17 +15,23 @@ abstract class EChart(
     internal var tooltip: ToolTip? = null,
     internal var animation: Boolean = false,
     @Transient private val gson: Gson = Gson()
-) {
-    fun toJson(): String = gson.toJson(this)
+): EChart {
+    override fun toJson(): String = gson.toJson(this)
 
     abstract class Builder {
         internal var xAxis: Axis<*>? = null
         internal var yAxis: Axis<*>? = null
-        internal var grid: Grid? = null
-        internal var title: Title? = null
-        internal var tooltip: ToolTip? = null
-        fun xAxis(axis: Axis<*>): Builder {
-            xAxis = axis
+        private var grid: Grid? = null
+        private var title: Title? = null
+        private var tooltip: ToolTip? = null
+        fun axis(@AxisType type: Int, axis: Axis<*>): Builder {
+            when(type) {
+                AxisType.X -> xAxis = axis
+                AxisType.Y -> yAxis = axis
+                else -> {
+
+                }
+            }
             return this
         }
 
@@ -47,7 +55,7 @@ abstract class EChart(
             return this
         }
 
-        internal fun apply(chart: EChart) {
+        internal fun apply(chart: BaseChart) {
             chart.xAxis = xAxis
             chart.yAxis = yAxis
             chart.tooltip = tooltip
@@ -55,6 +63,6 @@ abstract class EChart(
             chart.grid = grid
         }
 
-        abstract fun build(): EChart
+        abstract fun build(): BaseChart
     }
 }

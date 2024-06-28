@@ -1,7 +1,6 @@
 package cn.touchair.androidecharts.charts
 
-import cn.touchair.androidecharts.charts.base.EChart
-import cn.touchair.androidecharts.common.linspace
+import cn.touchair.androidecharts.charts.base.BaseChart
 import cn.touchair.androidecharts.interfaces.SeriesType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Emphasis
@@ -13,12 +12,14 @@ import kotlin.math.floor
 class HeatmapChart private constructor(
     data: Array<Array<Float>>,
     private var visualMap: VisualMap
-) : EChart() {
+) : BaseChart() {
 
     val series: Series<Array<Array<Float>>> = Series(
         SeriesType.HEATMAP,
         data,
-        emphasis = Emphasis(),
+        emphasis = Emphasis(
+            shadow = true
+        ),
         progressive = 1000,
         animation = false
     )
@@ -28,7 +29,7 @@ class HeatmapChart private constructor(
         private val min: Any = 0F,
         private val max: Any = 0F,
         private val remap: Boolean = true
-    ) : EChart.Builder() {
+    ) : BaseChart.Builder() {
 
         private var visualMap: VisualMap = VisualMap(
             min = vmin(),

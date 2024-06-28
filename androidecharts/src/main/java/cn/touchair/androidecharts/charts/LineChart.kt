@@ -1,11 +1,11 @@
 package cn.touchair.androidecharts.charts
 
-import cn.touchair.androidecharts.charts.base.EChart
+import cn.touchair.androidecharts.charts.base.BaseChart
 import cn.touchair.androidecharts.interfaces.SeriesType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Emphasis
 import cn.touchair.androidecharts.widget.Series
-open class LineChart<T: Number> internal constructor(data: Array<T>): EChart() {
+open class LineChart<T: Number> internal constructor(data: Array<T>): BaseChart() {
     val series: Series<Array<T>> = Series<Array<T>>(
         data = data,
         type = SeriesType.LINE,
@@ -13,7 +13,7 @@ open class LineChart<T: Number> internal constructor(data: Array<T>): EChart() {
     )
     open class Builder<T: Number>(
         private var data: Array<T>,
-    ): EChart.Builder() {
+    ): BaseChart.Builder() {
 
         override fun build(): LineChart<T> {
             val chart = LineChart(data)
