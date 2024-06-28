@@ -1,15 +1,16 @@
 package cn.touchair.androidecharts.widget
 
-data class VisualMap(
-    var min: Any? = null,
-    var max: Any? = null,
-    var calculable: Boolean = false,
-    var realtime: Boolean = false,
-    var inRange: Map<String, Any>? = null,
-    var orient: String = "horizontal" /*"vertical"*/,
-    var left: String = "auto",
-    var top: String = "auto",
-    var right: String = "auto",
-    var bottom: String = "auto",
+import cn.touchair.androidecharts.interfaces.Orient
 
+data class VisualMap(
+    val min: Any? = null,
+    val max: Any? = null,
+    val calculable: Boolean = false,
+    val realtime: Boolean = false,
+    val inRange: Map<String, Any>? = null,
+    @Orient val orient: String = Orient.HORIZONTAL,
+    val left: String = "auto",
+    val top: String = "auto",
+    val right: String = "auto",
+    val bottom: String = "auto",
 )

@@ -49,6 +49,12 @@ class HeatmapChart private constructor(
                 data = if (remap) remap(data) else data,
                 visualMap = visualMap
             )
+            if (xAxis == null) {
+                xAxis = Axis<Any>()
+            }
+            if (yAxis == null) {
+                yAxis = Axis<Any>()
+            }
             apply(chart)
             return chart
         }

@@ -11,7 +11,6 @@ import cn.touchair.androidecharts.charts.BarChart
 import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.charts.PieChart
-import cn.touchair.androidecharts.common.range
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
@@ -65,9 +64,6 @@ class MainActivity : AppCompatActivity() {
                     data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
                 )
             )
-            .yAxis(
-                Axis<Any>(type = "value")
-            )
             .tooltip(
                 ToolTip(
                     trigger = ToolTip.TRIGGER_AXIS
@@ -84,9 +80,6 @@ class MainActivity : AppCompatActivity() {
                 Axis(
                     data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
                 )
-            )
-            .yAxis(
-                Axis<Any>(type = "value")
             )
             .title(
                 Title("Area", left = "center", top = "10")
@@ -146,11 +139,8 @@ class MainActivity : AppCompatActivity() {
         val bar = BarChart.Builder(data = data)
             .xAxis(
                 Axis(
-                    data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                    data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
                 )
-            )
-            .yAxis(
-                Axis<Any>(type = "value")
             )
             .tooltip(
                 ToolTip()
@@ -173,16 +163,6 @@ class MainActivity : AppCompatActivity() {
         val chart = HeatmapChart.Builder(
             data.toTypedArray()
         )
-            .xAxis(
-                Axis<Int>(
-                    data = range(0, col)
-                )
-            )
-            .yAxis(
-                Axis<Int>(
-                    data = range(0, row)
-                )
-            )
             .title(
                 Title("Heatmap", left = "center", top = "10")
             )

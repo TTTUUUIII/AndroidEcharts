@@ -1,7 +1,12 @@
 package cn.touchair.androidecharts.widget
 
 class Axis<T>(
-    var data: Array<T>? = null,
-    var type: String = "category",
+    val data: Array<T>? = null,
+    val type: String = TYPE_CATEGORY,
     var boundaryGap: Boolean = true
-)
+) {
+    companion object {
+        const val TYPE_CATEGORY = "category"
+        const val TYPE_VALUE = "value"
+    }
+}
