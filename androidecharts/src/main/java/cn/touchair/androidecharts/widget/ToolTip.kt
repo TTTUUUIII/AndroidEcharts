@@ -2,7 +2,7 @@ package cn.touchair.androidecharts.widget
 
 data class ToolTip(
     val show: Boolean = true,
-    val trigger: String = "none"
+    val trigger: String = TRIGGER_ITEM
 ) {
     companion object {
         const val TRIGGER_ITEM = "item"

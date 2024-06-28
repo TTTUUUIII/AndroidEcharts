@@ -6,16 +6,14 @@ import cn.touchair.androidecharts.interfaces.SeriesType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Emphasis
 import cn.touchair.androidecharts.widget.Series
-import cn.touchair.androidecharts.widget.Title
 import cn.touchair.androidecharts.widget.VisualMap
 import kotlin.math.ceil
 import kotlin.math.floor
 
 class HeatmapChart private constructor(
     data: Array<Array<Float>>,
-): EChart() {
-
-    var visualMap: VisualMap? = null
+    private var visualMap: VisualMap
+) : EChart() {
 
     val series: Series<Array<Array<Float>>> = Series(
         SeriesType.HEATMAP,
@@ -27,71 +25,32 @@ class HeatmapChart private constructor(
 
     class Builder(
         private var data: Array<Array<Float>>,
-    ): EChart.Builder() {
-        private var min: Any = 0F
-        private var max: Any = 0F
-        private var calculable: Boolean = false
-        private var xMin: Number = 0
-        private var xMax: Number = data.size
-        private var yMin: Number = 0
-        private var yMax: Number = data[0].size
+        private val min: Any = 0F,
+        private val max: Any = 0F,
+        private val remap: Boolean = true
+    ) : EChart.Builder() {
 
-        /**
-         * @param min Any
-         * @param max Any
-         * @return EChartHeatMap.Builder
-         */
-        fun range(min: Any, max: Any): Builder {
-            this.min = min
-            this.max = max
-            return this
-        }
+        private var visualMap: VisualMap = VisualMap(
+            min = vmin(),
+            max = vmax(),
+            calculable = min is Number && max is Number,
+            left = "0",
+            bottom = "0",
+            inRange = mapOf(
+                "color" to colorRange()
+            )
+        )
 
-        fun <T: Number>xRange(min: T, max: T): Builder {
-            xMin = min
-            xMax = max
-            return this
-        }
-
-        fun <T: Number>yRange(min: T, max: T): Builder {
-            yMin = min
-            yMax = max
-            return this
-        }
+        private fun vmax(): Any = if (min == max) ceil(data.maxOf { it.max() }) else max
+        private fun vmin(): Any = if (min==max) floor(data.minOf { it.min() }) else min
 
         override fun build(): HeatmapChart {
-            if (max == min) {
-                min = floor(data.minOf { it.min() })
-                max = ceil(data.maxOf { it.max() })
-            }
-            if (min is Number && max is Number) {
-                calculable = true
-            }
-
-            val heatmap = HeatmapChart(data = remap(data))
-
-            heatmap.grid = grid
-            heatmap.title = title
-            heatmap.tooltip = tooltip
-
-            /*X axis*/
-            heatmap.xAxis = Axis(
-                data = linspace(start = xMin.toFloat(), end = xMax.toFloat(), data.size)
+            val chart = HeatmapChart(
+                data = if (remap) remap(data) else data,
+                visualMap = visualMap
             )
-            /*Y axis*/
-            heatmap.yAxis = Axis(
-                data = linspace(start = yMin.toFloat(), end = yMax.toFloat(), data[0].size)
-            )
-            /*legend*/
-            heatmap.visualMap = VisualMap(
-                min,
-                max,
-                calculable = calculable,
-                left = "0",
-                bottom = "0",
-                inRange = mapOf("color" to colorRange())
-            )
-            return heatmap
+            apply(chart)
+            return chart
         }
 
         private fun remap(src: Array<Array<Float>>): Array<Array<Float>> {

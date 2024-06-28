@@ -11,6 +11,8 @@ import cn.touchair.androidecharts.charts.BarChart
 import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.charts.PieChart
+import cn.touchair.androidecharts.common.linspace
+import cn.touchair.androidecharts.common.range
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
@@ -18,6 +20,9 @@ import cn.touchair.androidecharts.widget.Title
 import cn.touchair.androidecharts.widget.ToolTip
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.stream.IntStream.range
+import kotlin.math.floor
+import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,6 +72,11 @@ class MainActivity : AppCompatActivity() {
             .yAxis(
                 Axis<Any>(type = "value")
             )
+            .tooltip(
+                ToolTip(
+                    trigger = ToolTip.TRIGGER_AXIS
+                )
+            )
             .build()
         binding.figureView.draw(area, merge = false)
     }
@@ -84,6 +94,11 @@ class MainActivity : AppCompatActivity() {
             )
             .title(
                 Title("Area", left = "center", top = "10")
+            )
+            .tooltip(
+                ToolTip(
+                    trigger = ToolTip.TRIGGER_AXIS
+                )
             )
             .build()
         binding.figureView.draw(area, merge = false)
@@ -142,27 +157,46 @@ class MainActivity : AppCompatActivity() {
                 Axis<Any>(type = "value")
             )
             .tooltip(
-                ToolTip(trigger = ToolTip.TRIGGER_ITEM)
+                ToolTip()
             )
             .build()
         binding.figureView.draw(bar, merge = false)
     }
 
     private fun drawHeatmapChart() {
-        assets.open("data/heatmap.json")
-            .use {
-                val text = it.readBytes().toString(Charsets.UTF_8)
-                val data: Array<Array<Float>> =
-                    gson.fromJson(text, object : TypeToken<Array<Array<Float>>>() {}.type)
-                val heatmap = HeatmapChart.Builder(data)
-                    .title(
-                        Title("Heatmap", left = "center", top = "10")
-                    )
-                    .grid(
-                        Grid(bottom = "70", show = true)
-                    )
-                    .build()
-                binding.figureView.draw(heatmap, merge = false)
+        val data = mutableListOf<Array<Float>>()
+        val row = 10
+        val col = 10
+        for (i in 0 until row) {
+            val g = FloatArray(col)
+            for (j in 0 until col) {
+                g[j] = floor(Math.random() * 100).toFloat()
             }
+            data.add(g.toTypedArray())
+        }
+        val chart = HeatmapChart.Builder(
+            data.toTypedArray()
+        )
+            .xAxis(
+                Axis<Int>(
+                    data = range(0, col)
+                )
+            )
+            .yAxis(
+                Axis<Int>(
+                    data = range(0, row)
+                )
+            )
+            .title(
+                Title("Heatmap", left = "center", top = "10")
+            )
+            .grid(
+                Grid(bottom = "70", show = true)
+            )
+            .tooltip(
+                ToolTip()
+            )
+            .build()
+        binding.figureView.draw(chart, merge = false)
     }
 }

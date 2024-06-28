@@ -2,7 +2,7 @@ package cn.touchair.androidecharts.common
 
 import java.util.Locale
 
-internal fun<T> T.linspace(start: Float, end: Float, count: Int): Array<Float> {
+fun<T> T.linspace(start: Float, end: Float, count: Int): Array<Float> {
     val dest = FloatArray(count)
     val step = (end - start) / count;
     for (i in 0 until count) {
@@ -11,7 +11,7 @@ internal fun<T> T.linspace(start: Float, end: Float, count: Int): Array<Float> {
     return dest.toTypedArray()
 }
 
-internal fun<T> T.range(start: Int, end: Int): Array<Int> {
+fun<T> T.range(start: Int, end: Int): Array<Int> {
     val dest = IntArray(end - start)
     for (i in dest.indices) {
         dest[i] = i
