@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <cn.touchair.androidecharts.FigureView
-        android:id="@+id/chart_view"
+        android:id="@+id/figure_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                 Axis<Any>(type = "value")
             )
             .build()
-        binding.chartView.draw(area, merge = false)
+        binding.figureView.draw(area, merge = false)
     }
 
     private fun drawAreaChart() {
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 Title("Area", left = "center", top = "10")
             )
             .build()
-        binding.chartView.draw(area, merge = false)
+        binding.figureView.draw(area, merge = false)
     }
 
     private fun drawPieChart() {
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             .build()
-        binding.chartView.draw(pie, merge = false)
+        binding.figureView.draw(pie, merge = false)
     }
 
     private fun drawBarChart() {
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                 ToolTip(trigger = ToolTip.TRIGGER_ITEM)
             )
             .build()
-        binding.chartView.draw(bar, merge = false)
+        binding.figureView.draw(bar, merge = false)
     }
 
     private fun drawHeatmapChart() {
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                         Grid(bottom = "70", show = true)
                     )
                     .build()
-                binding.chartView.draw(heatmap, merge = false)
+                binding.figureView.draw(heatmap, merge = false)
             }
     }
 }

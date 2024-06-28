@@ -1,7 +1,6 @@
 package cn.touchair.androidecharts.charts
 
 import cn.touchair.androidecharts.charts.base.EChart
-import cn.touchair.androidecharts.interfaces.Orient
 import cn.touchair.androidecharts.interfaces.SeriesType
 import cn.touchair.androidecharts.widget.Legend
 import cn.touchair.androidecharts.widget.Series
@@ -17,12 +16,9 @@ class PieChart(
     )
 
     class Builder(
-        private var data: Array<Map<String, Any>>
+        private var data: Array<Map<String, Any>>,
     ): EChart.Builder() {
-        private var legend: Legend = Legend(
-            orient = Orient.VERTICAL,
-            top = "8%"
-        )
+        private var legend: Legend? = null
         fun legend(legend: Legend): Builder {
             this.legend = legend
             return this

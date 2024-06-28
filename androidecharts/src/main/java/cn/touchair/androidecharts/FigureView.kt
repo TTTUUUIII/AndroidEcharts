@@ -58,11 +58,13 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
     }
 
     fun grid(grid: Grid = this.grid){
-        engine.evaluateJavascript("grid(${grid.row}, ${grid.col})", null)
+        if (isLoaded()) {
+            engine.evaluateJavascript("grid(${grid.row}, ${grid.col})", null)
+            notGrid = false
+        }
         if (this.grid != grid) {
             this.grid = grid
         }
-        notGrid = false
     }
 
     private fun isLoaded(): Boolean = !inProgressView.isVisible
