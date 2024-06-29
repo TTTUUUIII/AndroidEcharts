@@ -55,7 +55,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
             if (notGrid) {
                 grid()
             }
-            engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.toJson()}, $merge)", null)
+            engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.asOption()}, $merge)", null)
         } else {
             synchronized(this) {
                 waitList.add(

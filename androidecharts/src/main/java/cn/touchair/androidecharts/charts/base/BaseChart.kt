@@ -16,7 +16,7 @@ abstract class BaseChart(
     internal var animation: Boolean = false,
     @Transient private val gson: Gson = Gson()
 ): EChart {
-    override fun toJson(): String = gson.toJson(this)
+    override fun asOption(): String = gson.toJson(this)
 
     abstract class Builder {
         internal var xAxis: Axis<*>? = null
