@@ -10,13 +10,11 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import androidx.core.view.isVisible
 import cn.touchair.androidecharts.interfaces.EChart
 
 @SuppressLint("SetJavaScriptEnabled")
 class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
-    private var notGrid = true
     private var loaded = false
     private val engine: WebView = WebView(context)
     private val inProgressView: View = LayoutInflater.from(context).inflate(R.layout.layout_loading, this, false)
@@ -35,6 +33,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
                 super.onPageFinished(view, url)
                 inProgressView.visibility = GONE
                 loaded = true
+                grid(grid)
                 synchronized(this) {
                     waitList.forEach {
                         draw(it.chart,  it.gx, it.gy)
@@ -57,15 +56,12 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        onClear()
+        clear()
     }
 
     fun draw(chart: EChart, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
     private fun draw(chart: EChart, gx: Int, gy: Int, merge: Boolean = true) {
         if (isLoaded()) {
-            if (notGrid) {
-                grid()
-            }
             engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.asOption()}, $merge);", null)
         } else {
             synchronized(this) {
@@ -80,21 +76,17 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         }
     }
 
-    private fun grid(grid: Grid = this.grid){
+    private fun grid(grid: Grid){
         if (isLoaded()) {
             engine.evaluateJavascript("grid(${grid.row}, ${grid.col});", null)
-            notGrid = false
         }
-        if (this.grid != grid) {
-            this.grid = grid
-        }
+        this.grid = grid
     }
 
-    private fun onClear() {
+    private fun clear() {
         if (isLoaded()) {
             engine.evaluateJavascript("clear();", null)
         }
-        notGrid = true
         loaded = false
     }
 
