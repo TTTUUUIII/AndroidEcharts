@@ -47,16 +47,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         engine.settings.allowFileAccess = true
         addView(engine)
         addView(inProgressView)
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
         engine.loadUrl("file:///android_asset/h5/index.html")
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        clear()
     }
 
     fun draw(chart: EChart, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
@@ -87,7 +78,6 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         if (isLoaded()) {
             engine.evaluateJavascript("clear();", null)
         }
-        loaded = false
     }
 
     private fun isLoaded(): Boolean = loaded
