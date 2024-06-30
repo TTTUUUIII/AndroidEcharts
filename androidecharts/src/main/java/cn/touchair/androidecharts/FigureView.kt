@@ -2,6 +2,7 @@ package cn.touchair.androidecharts
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,12 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
     init {
         engine.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         val webViewClient = object: WebViewClient() {
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                notGrid = true
+                inProgressView.visibility = VISIBLE
+            }
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 inProgressView.visibility = GONE
