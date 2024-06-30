@@ -3,7 +3,7 @@ let Canvas = {
     row: 0,
     col: 0,
     split: function (row, col, elements) {
-        this.clear();
+        this.destroy();
         this.row = row;
         this.col = col;
         for (i = 0, offset = 0; i < row; ++i) {
@@ -19,7 +19,7 @@ let Canvas = {
         let viewport = this.viewports[gx][gy];
         option && viewport && viewport.setOption(option, !merge);
     },
-    clear: function () {
+    destroy: function () {
         for (i = 0; i < this.row; ++i) {
             for (j = 0; j < this.col; ++j) {
                 this.viewports[i][j].dispose();
@@ -27,6 +27,13 @@ let Canvas = {
         }
         this.viewports.length = 0;
     },
+    clear: function() {
+        for (i = 0; i < this.row; ++i) {
+            for (j = 0; j < this.col; ++j) {
+                this.viewports[i][j].clear();
+            }
+        }
+    }
 };
 
 // window.onload = function () {
@@ -39,15 +46,14 @@ function draw(gx, gy, option, merge) {
     Canvas.draw(gx, gy, option, merge);
 }
 
+function clear() {
+    Canvas.clear();
+}
+
 function empty() {
     let root = document.body;
     while (root.hasChildNodes()) {
         root.removeChild(root.firstChild);
-    }
-    if (window.canvas) {
-        destory();
-    } else {
-        window.canvas = [];
     }
     return root;
 }

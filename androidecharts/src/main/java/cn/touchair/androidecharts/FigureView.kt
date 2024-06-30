@@ -17,11 +17,10 @@ import cn.touchair.androidecharts.interfaces.EChart
 class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     private var notGrid = true
+    private var loaded = false
     private val engine: WebView = WebView(context)
     private val inProgressView: View = LayoutInflater.from(context).inflate(R.layout.layout_loading, this, false)
-    private val waitList: MutableList<DelayedChart> by lazy {
-        mutableListOf<DelayedChart>()
-    }
+    private val waitList: MutableList<DelayedChart> by lazy { mutableListOf<DelayedChart>() }
     private var grid: Grid = Grid(1, 1)
 
     init {
@@ -29,13 +28,13 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         val webViewClient = object: WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                notGrid = true
                 inProgressView.visibility = VISIBLE
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 inProgressView.visibility = GONE
+                loaded = true
                 synchronized(this) {
                     waitList.forEach {
                         draw(it.chart,  it.gx, it.gy)
@@ -56,13 +55,18 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         engine.loadUrl("file:///android_asset/h5/index.html")
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        onClear()
+    }
+
     fun draw(chart: EChart, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
     private fun draw(chart: EChart, gx: Int, gy: Int, merge: Boolean = true) {
         if (isLoaded()) {
             if (notGrid) {
                 grid()
             }
-            engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.asOption()}, $merge)", null)
+            engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.asOption()}, $merge);", null)
         } else {
             synchronized(this) {
                 waitList.add(
@@ -78,7 +82,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
     private fun grid(grid: Grid = this.grid){
         if (isLoaded()) {
-            engine.evaluateJavascript("grid(${grid.row}, ${grid.col})", null)
+            engine.evaluateJavascript("grid(${grid.row}, ${grid.col});", null)
             notGrid = false
         }
         if (this.grid != grid) {
@@ -86,7 +90,15 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         }
     }
 
-    private fun isLoaded(): Boolean = !inProgressView.isVisible
+    private fun onClear() {
+        if (isLoaded()) {
+            engine.evaluateJavascript("clear();", null)
+        }
+        notGrid = true
+        loaded = false
+    }
+
+    private fun isLoaded(): Boolean = loaded
 
     data class Grid(
         val row: Int,
