@@ -1,6 +1,6 @@
 package cn.touchair.androidecharts.charts.base
 import cn.touchair.androidecharts.interfaces.AxisType
-import cn.touchair.androidecharts.interfaces.EChart
+import cn.touchair.androidecharts.interfaces.EChartOption
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
 import cn.touchair.androidecharts.widget.Title
@@ -15,8 +15,7 @@ abstract class BaseChart(
     internal var tooltip: ToolTip? = null,
     internal var animation: Boolean = false,
     @Transient private val gson: Gson = Gson()
-): EChart {
-    override fun asOption(): String = gson.toJson(this)
+): EChartOption {
 
     abstract class Builder {
         internal var xAxis: Axis<*>? = null

@@ -5,14 +5,14 @@ import cn.touchair.androidecharts.interfaces.FontStyle
 data class Title(
     var text: String,
     private var show: Boolean = true,
-    var link: String = "",
-    var target: String = "blank",
-    @FontStyle var fontStyle: String = FontStyle.NORMAL,
-    var fontSize: Int = 18,
-    var left: String = "auto",
-    var right: String = "auto",
-    var top: String = "auto",
-    var bottom: String = "auto",
-    var subtext: String = ""
+    var link: String? = null,
+    var target: String? = null,
+    @FontStyle var fontStyle: String? = null,
+    var fontSize: Int? = null,
+    var left: String? = null,
+    var right: String? = null,
+    var top: String? = null,
+    var bottom: String? = null,
+    var subtext: String? = null
 ) {
 }

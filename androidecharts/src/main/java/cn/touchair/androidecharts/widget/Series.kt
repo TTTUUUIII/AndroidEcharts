@@ -8,8 +8,8 @@ class Series<T>(
     val data: T,
     val emphasis: Emphasis? = null,
     val progressive: Int? = null,
-    val animation: Boolean = false,
-    val name: String = "",
+    val animation: Boolean? = null,
+    val name: String? = null,
     var areaStyle: AreaStyle? = null,
     var radius: String? = null
 )

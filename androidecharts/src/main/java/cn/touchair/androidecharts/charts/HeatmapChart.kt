@@ -17,9 +17,7 @@ class HeatmapChart private constructor(
     val series: Series<Array<Array<Float>>> = Series(
         SeriesType.HEATMAP,
         data,
-        emphasis = Emphasis(
-            shadow = true
-        ),
+        emphasis = Emphasis(),
         progressive = 1000,
         animation = false
     )
@@ -51,10 +49,14 @@ class HeatmapChart private constructor(
                 visualMap = visualMap
             )
             if (xAxis == null) {
-                xAxis = Axis<Any>()
+                xAxis = Axis<Any>(
+                    type = Axis.TYPE_CATEGORY
+                )
             }
             if (yAxis == null) {
-                yAxis = Axis<Any>()
+                yAxis = Axis<Any>(
+                    type = Axis.TYPE_CATEGORY
+                )
             }
             apply(chart)
             return chart

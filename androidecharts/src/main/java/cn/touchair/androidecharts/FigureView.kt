@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import cn.touchair.androidecharts.interfaces.EChart
+import cn.touchair.androidecharts.interfaces.EChartOption
 
 @SuppressLint("SetJavaScriptEnabled")
 class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
@@ -50,8 +50,8 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         engine.loadUrl("file:///android_asset/h5/index.html")
     }
 
-    fun draw(chart: EChart, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
-    private fun draw(chart: EChart, gx: Int, gy: Int, merge: Boolean = true) {
+    fun draw(chart: EChartOption, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
+    private fun draw(chart: EChartOption, gx: Int, gy: Int, merge: Boolean = true) {
         if (isLoaded()) {
             engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.asOption()}, $merge);", null)
         } else {
@@ -88,7 +88,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
     )
 
     private inner class DelayedChart(
-        val chart: EChart,
+        val chart: EChartOption,
         val gx: Int,
         val gy: Int
     )

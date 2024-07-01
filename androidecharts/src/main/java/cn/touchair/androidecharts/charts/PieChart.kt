@@ -14,9 +14,7 @@ class PieChart(
         data =  data,
         type = SeriesType.PIE,
         radius = "50%",
-        emphasis = Emphasis(
-            shadow = true
-        )
+        emphasis = Emphasis()
     )
 
     class Builder(

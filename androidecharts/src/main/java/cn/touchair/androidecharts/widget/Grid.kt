@@ -2,11 +2,11 @@ package cn.touchair.androidecharts.widget
 
 data class Grid(
     val show: Boolean = false,
-    val z: Int = 2,
-    val left: String = "10%",
-    val top: String = "15%",
-    val right: String = "10%",
-    var bottom: String = "60",
-    var width: String = "auto",
-    var height: String = "auto"
+    val z: Int? = null,
+    val left: String? = null,
+    val top: String? = null,
+    val right: String? = null,
+    var bottom: String? = null,
+    var width: String? = null,
+    var height: String? = null
 )
