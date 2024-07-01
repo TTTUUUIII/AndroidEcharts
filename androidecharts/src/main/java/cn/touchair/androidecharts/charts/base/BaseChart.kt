@@ -1,5 +1,5 @@
 package cn.touchair.androidecharts.charts.base
-import cn.touchair.androidecharts.interfaces.AxisType
+import cn.touchair.androidecharts.annotations.AxisType
 import cn.touchair.androidecharts.interfaces.EChartOption
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid

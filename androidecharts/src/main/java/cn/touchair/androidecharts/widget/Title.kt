@@ -1,6 +1,6 @@
 package cn.touchair.androidecharts.widget
 
-import cn.touchair.androidecharts.interfaces.FontStyle
+import cn.touchair.androidecharts.annotations.FontStyle
 
 data class Title(
     var text: String,

@@ -1,14 +1,15 @@
 package cn.touchair.androidecharts.widget
 
-import cn.touchair.androidecharts.interfaces.Orient
+import cn.touchair.androidecharts.annotations.OrientType
 
 data class VisualMap(
+    val type: String? = null,
     val min: Any? = null,
     val max: Any? = null,
     val calculable: Boolean? = null,
     val realtime: Boolean? = null,
     val inRange: Map<String, Any>? = null,
-    @Orient val orient: String? = null,
+    @OrientType val orient: String? = null,
     val left: String? = null,
     val top: String? = null,
     val right: String? = null,

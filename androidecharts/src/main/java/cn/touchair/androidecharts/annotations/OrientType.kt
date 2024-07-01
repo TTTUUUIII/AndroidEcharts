@@ -4,10 +4,10 @@ import androidx.annotation.StringDef
 
 
 @StringDef(
-    Orient.VERTICAL,
-    Orient.HORIZONTAL
+    OrientType.VERTICAL,
+    OrientType.HORIZONTAL
 )
-annotation class Orient {
+annotation class OrientType {
     companion object {
         internal const val HORIZONTAL = "horizontal"
         internal const val VERTICAL = "vertical"

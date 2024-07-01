@@ -12,7 +12,7 @@ import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.charts.PieChart
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
-import cn.touchair.androidecharts.interfaces.AxisType
+import cn.touchair.androidecharts.annotations.AxisType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
 import cn.touchair.androidecharts.widget.Title

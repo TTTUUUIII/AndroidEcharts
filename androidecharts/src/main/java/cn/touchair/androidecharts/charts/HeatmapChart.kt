@@ -1,7 +1,7 @@
 package cn.touchair.androidecharts.charts
 
 import cn.touchair.androidecharts.charts.base.BaseChart
-import cn.touchair.androidecharts.interfaces.SeriesType
+import cn.touchair.androidecharts.annotations.SeriesType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Emphasis
 import cn.touchair.androidecharts.widget.Series

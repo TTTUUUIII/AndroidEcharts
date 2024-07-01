@@ -1,7 +1,6 @@
 package cn.touchair.androidecharts.widget
 
-import cn.touchair.androidecharts.interfaces.SeriesType
-import cn.touchair.androidecharts.style.AreaStyle
+import cn.touchair.androidecharts.annotations.SeriesType
 
 class Series<T>(
     @SeriesType val type: String,
@@ -10,6 +9,6 @@ class Series<T>(
     val progressive: Int? = null,
     val animation: Boolean? = null,
     val name: String? = null,
-    var areaStyle: AreaStyle? = null,
+    var areaStyle: Any? = null,
     var radius: String? = null
 )

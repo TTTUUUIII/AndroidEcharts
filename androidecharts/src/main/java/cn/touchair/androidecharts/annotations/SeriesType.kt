@@ -1,4 +1,4 @@
-package cn.touchair.androidecharts.interfaces
+package cn.touchair.androidecharts.annotations
 
 import androidx.annotation.StringDef
 

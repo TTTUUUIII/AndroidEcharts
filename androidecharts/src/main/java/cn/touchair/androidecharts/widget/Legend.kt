@@ -1,12 +1,12 @@
 package cn.touchair.androidecharts.widget
 
-import cn.touchair.androidecharts.interfaces.Orient
+import cn.touchair.androidecharts.annotations.OrientType
 
 data class Legend (
     val show: Boolean = true,
     val z: Int? = null,
     val type: String? = null,
-    @Orient val orient: String? = null,
+    @OrientType val orient: String? = null,
     val left: String? = null,
     val right: String? = null,
     val top: String? = null,
