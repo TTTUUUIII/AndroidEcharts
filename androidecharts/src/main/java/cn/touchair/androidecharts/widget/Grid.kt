@@ -8,5 +8,5 @@ data class Grid(
     val right: String? = null,
     var bottom: String? = null,
     var width: String? = null,
-    var height: String? = null
+    var height: String? = null,
 )

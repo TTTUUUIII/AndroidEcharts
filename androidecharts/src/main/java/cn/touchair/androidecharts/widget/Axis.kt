@@ -1,8 +1,10 @@
 package cn.touchair.androidecharts.widget
 
 class Axis<T>(
-    val data: Array<T>? = null,
+    val data: T? = null,
     val type: String? = null,
+    val gridIndex: Int? = null,
+    val name: String? = null,
     var boundaryGap: Boolean? = null
 ) {
     companion object {

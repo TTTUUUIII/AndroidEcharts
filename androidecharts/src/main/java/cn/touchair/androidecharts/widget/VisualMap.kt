@@ -9,7 +9,7 @@ data class VisualMap(
     val calculable: Boolean? = null,
     val realtime: Boolean? = null,
     val inRange: Map<String, Any>? = null,
-    @OrientType val orient: String? = null,
+    @OrientType val orient: String = OrientType.VERTICAL,
     val left: String? = null,
     val top: String? = null,
     val right: String? = null,
