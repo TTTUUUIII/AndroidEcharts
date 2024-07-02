@@ -10,5 +10,7 @@ class Series<T>(
     val animation: Boolean? = null,
     val name: String? = null,
     var areaStyle: Any? = null,
-    var radius: String? = null
+    var radius: String? = null,
+    val yAxisIndex: Int? = null,
+    val xAxisIndex: Int? = null
 )
