@@ -4,7 +4,7 @@ import cn.touchair.androidecharts.annotations.SeriesType
 
 class Series<T>(
     @SeriesType val type: String,
-    val data: T,
+    var data: T,
     val emphasis: Emphasis? = null,
     val progressive: Int? = null,
     val animation: Boolean? = null,
