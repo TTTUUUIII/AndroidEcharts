@@ -15,5 +15,6 @@ class Series<T>(
     val yAxisIndex: Int? = null,
     val xAxisIndex: Int? = null,
     val smooth: Boolean = false,
-    val lineStyle: LineStyle? = null
+    val lineStyle: LineStyle? = null,
+    val showSymbol: Boolean = true
 )
