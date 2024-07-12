@@ -12,5 +12,6 @@ class Series<T>(
     var areaStyle: Any? = null,
     var radius: String? = null,
     val yAxisIndex: Int? = null,
-    val xAxisIndex: Int? = null
+    val xAxisIndex: Int? = null,
+    val smooth: Boolean = false
 )
