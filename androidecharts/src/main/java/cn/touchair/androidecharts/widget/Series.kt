@@ -1,6 +1,7 @@
 package cn.touchair.androidecharts.widget
 
 import cn.touchair.androidecharts.annotations.SeriesType
+import cn.touchair.androidecharts.style.LineStyle
 
 class Series<T>(
     @SeriesType val type: String,
@@ -14,5 +15,5 @@ class Series<T>(
     val yAxisIndex: Int? = null,
     val xAxisIndex: Int? = null,
     val smooth: Boolean = false,
-    val color: String? = null
+    val lineStyle: LineStyle? = null
 )
