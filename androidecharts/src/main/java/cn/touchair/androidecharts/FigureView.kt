@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import cn.touchair.androidecharts.interfaces.EChartOption
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -18,7 +19,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
     private var loaded = false
     private val engine: WebView = WebView(context)
     private val inProgressView: View = LayoutInflater.from(context).inflate(R.layout.layout_loading, this, false)
-    private val waitList: MutableList<DelayedChart> by lazy { mutableListOf<DelayedChart>() }
+    private var cache: EChartOption? = null
     private var grid: Grid = Grid(1, 1)
 
     init {
@@ -34,12 +35,7 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
                 inProgressView.visibility = GONE
                 loaded = true
                 grid(grid)
-                synchronized(this) {
-                    waitList.forEach {
-                        draw(it.chart,  it.gx, it.gy)
-                    }
-                    waitList.clear()
-                }
+                cache?.let { draw(it, false) }
             }
         }
         engine.webViewClient = webViewClient
@@ -47,23 +43,22 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         engine.settings.allowFileAccess = true
         addView(engine)
         addView(inProgressView)
-        engine.loadUrl("file:///android_asset/h5/index.html")
+        reload()
     }
 
     fun draw(chart: EChartOption, merge: Boolean = true) = draw(chart, gx = 0, gy = 0, merge = merge)
     private fun draw(chart: EChartOption, gx: Int, gy: Int, merge: Boolean = true) {
         if (isLoaded()) {
             engine.evaluateJavascript("draw(${gx}, ${gy}, ${chart.asOption()}, $merge);", null)
-        } else {
-            synchronized(this) {
-                waitList.add(
-                    DelayedChart(
-                        chart,
-                        gx,
-                        gy
-                    )
-                )
-            }
+        }
+        cache = chart
+    }
+
+    override fun setVisibility(visibility: Int) {
+        if (visibility == this.visibility) return
+        super.setVisibility(visibility)
+        if (isVisible) {
+            reload()
         }
     }
 
@@ -78,6 +73,11 @@ class FigureView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         if (isLoaded()) {
             engine.evaluateJavascript("clear();", null)
         }
+    }
+
+    private fun reload() {
+        loaded = false
+        engine.loadUrl("file:///android_asset/h5/index.html")
     }
 
     private fun isLoaded(): Boolean = loaded
