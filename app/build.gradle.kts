@@ -40,7 +40,7 @@ android {
 
 dependencies {
 
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation(libs.gson)
     implementation(project(path=":androidecharts"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

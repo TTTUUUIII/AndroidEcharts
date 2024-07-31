@@ -5,6 +5,16 @@ import cn.touchair.androidecharts.annotations.SeriesType
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Emphasis
 import cn.touchair.androidecharts.widget.Series
+
+@Deprecated(
+    "Since these chart options have no scalability, I recommend just creating the chart options by implement cn.touchair.androidecharts.interfaces.EChartOption."
+)
+/**
+ * @see <a href="https://echarts.apache.org/examples/en/editor.html?c=line-simple">echart-line-simple</a>
+ * @param T Number
+ * @param data Array<T>
+ * @constructor
+ */
 open class LineChart<T: Number> internal constructor(data: Array<T>): BaseChart() {
     val series: Series<Array<T>> = Series<Array<T>>(
         data = data,

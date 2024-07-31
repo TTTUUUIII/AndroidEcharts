@@ -9,6 +9,15 @@ import cn.touchair.androidecharts.widget.VisualMap
 import kotlin.math.ceil
 import kotlin.math.floor
 
+@Deprecated(
+    "Since these chart options have no scalability, I recommend just creating the chart options by implement cn.touchair.androidecharts.interfaces.EChartOption."
+)
+/**
+ * @see <a href="https://echarts.apache.org/examples/en/editor.html?c=heatmap-large">echart-heatmap</a>
+ * @param T Number
+ * @param data Array<T>
+ * @constructor
+ */
 class HeatmapChart private constructor(
     data: Array<Array<Float>>,
     private var visualMap: VisualMap

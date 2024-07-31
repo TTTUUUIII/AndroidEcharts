@@ -8,13 +8,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import cn.touchair.androidecharts.charts.AreaChart
 import cn.touchair.androidecharts.charts.BarChart
-import cn.touchair.androidecharts.charts.LineChart
 import cn.touchair.androidecharts.charts.HeatmapChart
 import cn.touchair.androidecharts.charts.PieChart
 import cn.touchair.androidecharts.databinding.ActivityMainBinding
 import cn.touchair.androidecharts.annotations.AxisType
+import cn.touchair.androidecharts.annotations.SeriesType
+import cn.touchair.androidecharts.interfaces.EChartOption
 import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Grid
+import cn.touchair.androidecharts.widget.Series
 import cn.touchair.androidecharts.widget.Title
 import cn.touchair.androidecharts.widget.ToolTip
 import kotlin.math.floor
@@ -56,21 +58,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun drawLineChart() {
-        val data = arrayOf(820, 932, 901, 934, 1290, 1330, 1320)
-        val area = LineChart.Builder(data = data)
-            .axis(
-                AxisType.X,
-                Axis(
-                    data = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-                )
+        /*Impl line option*/
+        val line = object : EChartOption {
+            private val xAxis = Axis(
+                type = Axis.TYPE_CATEGORY,
+                data = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
             )
-            .tooltip(
-                ToolTip(
-                    trigger = ToolTip.TRIGGER_AXIS
-                )
+            private val yAxis = Axis<Any>(type = Axis.TYPE_VALUE)
+            private val series = Series(
+                data = listOf(150, 230, 224, 218, 135, 147, 260),
+                type = SeriesType.LINE
             )
-            .build()
-        binding.figureView.draw(area, merge = false)
+        }
+        /*draw line chart*/
+        binding.figureView.draw(line, merge = false)
     }
 
     private fun drawAreaChart() {

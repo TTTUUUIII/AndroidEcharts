@@ -6,6 +6,15 @@ import cn.touchair.androidecharts.widget.Axis
 import cn.touchair.androidecharts.widget.Emphasis
 import cn.touchair.androidecharts.widget.Series
 
+@Deprecated(
+    "Since these chart options have no scalability, I recommend just creating the chart options by implement cn.touchair.androidecharts.interfaces.EChartOption."
+)
+/**
+ * @see <a href="https://echarts.apache.org/examples/en/editor.html?c=area-basic">echart-area-basic</a>
+ * @param T Number
+ * @param data Array<T>
+ * @constructor
+ */
 class BarChart<T: Number>(data: Array<T>): BaseChart() {
 
     val series: Series<Array<T>>  = Series(

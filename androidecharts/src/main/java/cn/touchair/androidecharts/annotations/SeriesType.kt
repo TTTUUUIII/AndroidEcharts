@@ -10,9 +10,9 @@ import androidx.annotation.StringDef
 )
 annotation class SeriesType {
     companion object {
-        internal const val HEATMAP = "heatmap"
-        internal const val LINE = "line"
-        internal const val BAR = "bar"
-        internal const val PIE = "pie"
+        const val HEATMAP = "heatmap"
+        const val LINE = "line"
+        const val BAR = "bar"
+        const val PIE = "pie"
     }
 }

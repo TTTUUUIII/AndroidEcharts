@@ -6,6 +6,16 @@ import cn.touchair.androidecharts.widget.Emphasis
 import cn.touchair.androidecharts.widget.Legend
 import cn.touchair.androidecharts.widget.Series
 
+@Deprecated(
+    "Since these chart options have no scalability, I recommend just creating the chart options by implement cn.touchair.androidecharts.interfaces.EChartOption."
+)
+/**
+ * @see cn.touchair.androidecharts.interfaces.EChartOption
+ * @see <a href="https://echarts.apache.org/examples/en/editor.html?c=pie-simple">echart-pie-simple</a>
+ * @param data Array<Map<String, Any>>
+ * @param legend Legend?
+ * @constructor
+ */
 class PieChart(
     data: Array<Map<String, Any>>,
     val legend: Legend? = null
