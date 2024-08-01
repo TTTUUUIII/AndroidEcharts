@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/TTTUUUIII/AndroidEcharts.svg)](https://jitpack.io/#TTTUUUIII/AndroidEcharts)
+
 # Introduce
 
 In order to make [Echart](https://echarts.apache.org/) easier to use in Android, this project simply encapsulates it.
@@ -7,6 +9,7 @@ In order to make [Echart](https://echarts.apache.org/) easier to use in Android,
 # Quick start
 
 **Add dependencies**
+
 settings.gradle.kts
 
 ```kotlin
