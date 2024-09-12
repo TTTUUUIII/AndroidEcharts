@@ -2,7 +2,7 @@ package cn.touchair.androidecharts.widget
 
 import cn.touchair.androidecharts.annotations.OrientType
 
-data class Legend (
+open class Legend (
     val show: Boolean = true,
     val z: Int? = null,
     val type: String? = null,

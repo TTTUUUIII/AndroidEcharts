@@ -1,6 +1,6 @@
 package cn.touchair.androidecharts.widget
 
-data class ToolTip(
+open class ToolTip(
     val show: Boolean = true,
     val trigger: String = TRIGGER_ITEM,
     val formatter: String? = null

@@ -3,7 +3,7 @@ package cn.touchair.androidecharts.widget
 import cn.touchair.androidecharts.annotations.SeriesType
 import cn.touchair.androidecharts.style.LineStyle
 
-class Series<T>(
+open class Series<T>(
     @SeriesType val type: String,
     var data: T,
     val emphasis: Emphasis? = null,

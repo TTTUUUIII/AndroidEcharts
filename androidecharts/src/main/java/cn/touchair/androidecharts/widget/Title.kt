@@ -2,7 +2,7 @@ package cn.touchair.androidecharts.widget
 
 import cn.touchair.androidecharts.annotations.FontStyle
 
-data class Title(
+open class Title(
     var text: String,
     private var show: Boolean = true,
     var link: String? = null,

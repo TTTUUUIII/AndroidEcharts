@@ -2,7 +2,7 @@ package cn.touchair.androidecharts.widget
 
 import cn.touchair.androidecharts.annotations.OrientType
 
-class VisualMap(
+open class VisualMap(
     val type: String? = null,
     val min: Any? = null,
     val max: Any? = null,

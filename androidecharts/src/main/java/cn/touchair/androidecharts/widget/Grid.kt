@@ -1,6 +1,6 @@
 package cn.touchair.androidecharts.widget
 
-data class Grid(
+open class Grid(
     val show: Boolean = false,
     val z: Int? = null,
     val left: String? = null,
