@@ -1,6 +1,7 @@
 package cn.touchair.androidecharts.widget
 
 open class Axis<T>(
+    val show: Boolean = true,
     val data: T? = null,
     val type: String? = null,
     val gridIndex: Int? = null,
